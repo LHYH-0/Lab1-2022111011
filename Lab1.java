@@ -516,6 +516,7 @@ public class Lab1 {
             }
         }catch(IOException e){
             System.out.println("Error reading file: " + e.getMessage());
+            System.out.println("Error reading file111: " + e.getMessage());
         }
     }
 }
