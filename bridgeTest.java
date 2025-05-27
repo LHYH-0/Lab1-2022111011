@@ -11,50 +11,50 @@ import static org.junit.Assert.assertTrue;
 
 public class bridgeTest {
 
-    /**@Test
-    public void testCase1_BridgeWordsExistSingle() throws IOException {
-        String input = "2\nthe but\n0\n";
-        String expectedOutput = "The bridge words from \"the\" to \"but\" is: \"team\".";
+    @Test  // 对应测试用例1：无效单词格式
+    public void testCase1_InvalidWordFormat() throws IOException {
+        String input = "2\n111 the\n0\n";
+        String expectedOutput = "No 111 or the in the graph!";
         runTest(input, expectedOutput);
     }
 
-    @Test
-    public void testCase2_BridgeWordsExistMultiple() throws IOException {
-        String input = "2\nbut team\n0\n";
-        // 允许两种可能的输出顺序
-        String expectedOutput1 = "The bridge words from \"but\" to \"team\" are: \"the\", and \"a\".";
-        String expectedOutput2 = "The bridge words from \"but\" to \"team\" are: \"a\", and \"the\".";
-        runTestMultiple(input, expectedOutput1, expectedOutput2);
-    }
-
-    @Test
-    public void testCase3_NoBridgeWords() throws IOException {
+    @Test  // 对应测试用例2：无桥接词
+    public void testCase2_NoBridgeWords() throws IOException {
         String input = "2\na the\n0\n";
         String expectedOutput = "No bridge words from \"a\" to \"the\"!";
         runTest(input, expectedOutput);
     }
 
-    @Test
-    public void testCase4_WordNotInGraph() throws IOException {
-        String input = "2\nyes the\n0\n";
-        String expectedOutput = "No yes or the in the graph!";
+    @Test  // 对应测试用例3：单个桥接词
+    public void testCase3_SingleBridgeWord() throws IOException {
+        String input = "2\nthe but\n0\n";
+        String expectedOutput = "The bridge words from \"the\" to \"but\" is: \"team\".";
         runTest(input, expectedOutput);
     }
 
-    @Test
-    public void testCase5_InvalidWordFormat() throws IOException {
-        String input = "2\n111 the\n0\n";
-        String expectedOutput = "No 111 or the in the graph!";
-        runTest(input, expectedOutput);
-    }*/
-
-   @Test
-    public void testCase6_InvalidInputCount() throws IOException {
-        String input = "2\nthe\n0\n";
-        String expectedOutput = "Invalid input!";
-        runTest(input, expectedOutput);
+    @Test  // 对应测试用例4：两个桥接词
+    public void testCase4_MultipleBridgeWords() throws IOException {
+        String input = "2\nand the\n0\n";
+        String[] expectedOptions = {
+                "The bridge words from \"and\" to \"the\" are: \"but\", and \"shared\".",
+                "The bridge words from \"and\" to \"the\" are: \"shared\", and \"but\"."
+        };
+        runTestMultiple(input, expectedOptions);
     }
 
+    @Test  // 对应测试用例5：多个桥接词
+    public void testCase5_MultipleBridgeWordsOrder() throws IOException {
+        String input = "2\nbut team\n0\n";
+        String[] expectedOptions = {
+                "The bridge words from \"but\" to \"team\" are: \"the\", \"a\", and \"two\".",
+                "The bridge words from \"but\" to \"team\" are: \"the\", \"two\", and \"a\".",
+                "The bridge words from \"but\" to \"team\" are: \"a\", \"the\", and \"two\".",
+                "The bridge words from \"but\" to \"team\" are: \"a\", \"two\", and \"the\".",
+                "The bridge words from \"but\" to \"team\" are: \"two\", \"the\", and \"a\".",
+                "The bridge words from \"but\" to \"team\" are: \"two\", \"a\", and \"the\"."
+        };
+        runTestMultiple(input, expectedOptions);
+    }
     private void runTest(String input, String expectedOutput) throws IOException {
         InputStream originalIn = System.in;
         PrintStream originalOut = System.out;
